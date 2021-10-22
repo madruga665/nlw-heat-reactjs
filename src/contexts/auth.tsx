@@ -6,18 +6,18 @@ type User = {
   name: string;
   login: string;
   avatar_url: string;
-}
+};
 
 type AuthContextData = {
   user: User | null;
   signInUrl: string;
-}
+};
 
-export const AuthContext = createContext({} as AuthContextData)
+export const AuthContext = createContext({} as AuthContextData);
 
 type AuthProvider = {
   children: ReactNode;
-}
+};
 
 type AuthResponse = {
   token: string;
@@ -30,7 +30,7 @@ type AuthResponse = {
 };
 
 export function AuthProvider(props: AuthProvider) {
-  const [user, setUser ] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const signInUrl = `https://github.com/login/oauth/authorize?scope=user&client_id=a04d53e27b70a8a6f0f9`;
 
@@ -44,6 +44,18 @@ export function AuthProvider(props: AuthProvider) {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem("@dowhile:token");
+    
+    if (token) {
+      api.defaults.headers.common.authorization = `Bearer ${token}`
+
+      api.get<User>("profile").then((response) => {
+        setUser(response.data);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     const url = window.location.href;
     const hasGithubCode = url.includes("?code=");
 
@@ -54,10 +66,5 @@ export function AuthProvider(props: AuthProvider) {
     }
   }, []);
 
-
-  return (
-    <AuthContext.Provider value={{ signInUrl, user }}>
-      {props.children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={{ signInUrl, user }}>{props.children}</AuthContext.Provider>;
 }
