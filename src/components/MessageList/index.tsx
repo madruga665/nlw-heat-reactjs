@@ -16,6 +16,26 @@ export function MessageList() {
             <span>Luciano Amâncio</span>
           </div>
         </li>
+
+        <li className={styles.message}>
+          <p className={styles.messageContent}>Aqui vai o texto da mensagem</p>
+          <div className={styles.messageUser}>
+            <div className={styles.userImage}>
+              <img src="https://github.com/madruga665.png" alt="madruga" />
+            </div>
+            <span>Luciano Amâncio</span>
+          </div>
+        </li>
+
+        <li className={styles.message}>
+          <p className={styles.messageContent}>Aqui vai o texto da mensagem</p>
+          <div className={styles.messageUser}>
+            <div className={styles.userImage}>
+              <img src="https://github.com/madruga665.png" alt="madruga" />
+            </div>
+            <span>Luciano Amâncio</span>
+          </div>
+        </li>
       </ul>
     </div>
   )
